@@ -38,8 +38,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS',
-    'http://localhost:3000,https://furniture-store-rho-nine.vercel.app',
-    'https://furniture-store-819pbg7dm-christian-7cdf.vercel.app',
+    'http://localhost:3000,https://furniture-store-819pbg7dm-christian-7cdf.vercel.app',
+
 ).split(',')
 CORS_ALLOW_CREDENTIALS = True
 
