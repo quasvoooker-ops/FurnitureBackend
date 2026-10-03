@@ -38,10 +38,18 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS',
-    'http://localhost:3000,https://furniture-store-819pbg7dm-christian-7cdf.vercel.app',
-
+    'http://localhost:3000,http://127.0.0.1:3000,https://furniture-store-rho-nine.vercel.app'
 ).split(',')
 CORS_ALLOW_CREDENTIALS = True
+C:\DjangoFurniture\mysite>dir DjangonFurniture
+ Volume in drive C has no label.
+ Volume Serial Number is F6E5-232B
+
+ Directory of C:\DjangoFurniture\mysite
+
+File Not Found
+
+C:\DjangoFurniture\mysite>
 
 ROOT_URLCONF = 'mysite.urls'
 
