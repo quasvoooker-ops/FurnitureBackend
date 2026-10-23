@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import Order, OrderItem
 from .serializers import OrderSerializer, CreateOrderSerializer, UpdateOrderStatusSerializer
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class IsAdminOrStaff(IsAuthenticated):
@@ -19,34 +22,38 @@ class CreateOrderView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        s = CreateOrderSerializer(data=request.data)
-        if not s.is_valid():
-            return Response(s.errors, status=400)
-        d = s.validated_data
-        items_data = d.pop('items')
-        subtotal = sum(
-            float(str(item['price']).replace('$', '').replace(',', '')) * int(item['quantity'])
-            for item in items_data
-        )
-        shipping_fee = 0 if subtotal >= 5000 else 150
-        total = subtotal + shipping_fee
-        order = Order.objects.create(
-            user=request.user,
-            subtotal=subtotal,
-            shipping_fee=shipping_fee,
-            total=total,
-            **d
-        )
-        for item in items_data:
-            OrderItem.objects.create(
-                order=order,
-                product_id=item['id'],
-                name=item['name'],
-                price=float(str(item['price']).replace('$', '').replace(',', '')),
-                quantity=int(item['quantity']),
-                image=item.get('image', ''),
+        try:
+            s = CreateOrderSerializer(data=request.data)
+            if not s.is_valid():
+                return Response(s.errors, status=400)
+            d = s.validated_data
+            items_data = d.pop('items')
+            subtotal = sum(
+                float(str(item['price']).replace('$', '').replace(',', '')) * int(item['quantity'])
+                for item in items_data
             )
-        return Response(OrderSerializer(order).data, status=201)
+            shipping_fee = 0 if subtotal >= 5000 else 150
+            total = subtotal + shipping_fee
+            order = Order.objects.create(
+                user=request.user,
+                subtotal=subtotal,
+                shipping_fee=shipping_fee,
+                total=total,
+                **d
+            )
+            for item in items_data:
+                OrderItem.objects.create(
+                    order=order,
+                    product_id=item['id'],
+                    name=item['name'],
+                    price=float(str(item['price']).replace('$', '').replace(',', '')),
+                    quantity=int(item['quantity']),
+                    image=item.get('image', ''),
+                )
+            return Response(OrderSerializer(order).data, status=201)
+        except Exception as e:
+            logger.exception("Error creating order")
+            return Response({'detail': str(e)}, status=500)
 
 
 class MyOrdersView(APIView):
