@@ -23,8 +23,6 @@ INSTALLED_APPS = [
     'products',
     'accounts',
     'orders',
-    'cloudinary',
-    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -89,29 +87,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-import cloudinary
-cloudinary.config(
-    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME', 'afniande'),
-    api_key=os.environ.get('CLOUDINARY_API_KEY', '314664975574735'),
-    api_secret=os.environ.get('CLOUDINARY_API_SECRET', 'APDFKTOBIN-UOV4lkFgZZGefke4'),
-    secure=True,
-)
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'afniande'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '314664975574735'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'APDFKTOBIN-UOV4lkFgZZGefke4'),
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },

@@ -12,7 +12,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='living')
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image = models.URLField(max_length=500, blank=True)
     rating = models.IntegerField(default=0)
     stock = models.IntegerField(default=0)
     is_available = models.BooleanField(default=True)
