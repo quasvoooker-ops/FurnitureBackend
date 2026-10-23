@@ -12,9 +12,10 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'full_name', 'email', 'status', 'total', 'created_at']
     list_filter = ['status']
-    search_fields = ['full_name', 'email', 'user__email']
-    readonly_fields = ['created_at', 'updated_at']
+    list_editable = ['status']
+    search_fields = ['full_name', 'email']
     inlines = [OrderItemInline]
+    readonly_fields = ['created_at', 'updated_at', 'subtotal', 'shipping_fee', 'total']
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
