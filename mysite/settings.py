@@ -99,7 +99,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'quasvoooker@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'ewob ttgq qpab rhxb')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER', 'quasvoooker@gmail.com')
-EMAIL_TIMEOUT = 10
+
 OTP_EXPIRY_MINUTES = 10
 
 REST_FRAMEWORK = {
