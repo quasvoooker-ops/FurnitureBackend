@@ -101,6 +101,12 @@ cloudinary.config(
     secure=True,
 )
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'afniande'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '314664975574735'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'APDFKTOBIN-UOV4lkFgZZGefke4'),
+}
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
